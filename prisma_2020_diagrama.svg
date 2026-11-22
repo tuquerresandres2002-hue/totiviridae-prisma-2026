@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 510" width="100%" style="display:block;font-family:'Segoe UI',Calibri,Arial,sans-serif;background:#FFFFFF;border-radius:8px;">
+      <rect width="880" height="510" fill="#FFFFFF" rx="8"/>
+      <rect x="0" y="0" width="880" height="46" fill="#0B241A" rx="6"/>
+      <text x="440" y="21" text-anchor="middle" font-size="13.5" font-weight="800" fill="#FFFFFF">DIAGRAMA DE FLUJO PRISMA 2020 — CRIBADO SISTEMÁTICO DOBLE CIEGO (2021–2026)</text>
+      <text x="440" y="37" text-anchor="middle" font-size="10.2" fill="#CDE5D8">UPEC • Carrera de Laboratorio Clínico • Revisión Sistemática sobre Virus Endosimbiontes Totiviridae (LRV / TVV)</text>
+
+      <!-- FASE 1 -->
+      <rect x="14" y="60" width="110" height="94" rx="5" fill="#0E3022"/>
+      <text x="69" y="96" text-anchor="middle" font-size="11" font-weight="800" fill="#F5D585">FASE 1</text>
+      <text x="69" y="114" text-anchor="middle" font-size="9.5" font-weight="700" fill="#FFFFFF">IDENTIFICACIÓN</text>
+      <text x="69" y="128" text-anchor="middle" font-size="8.8" fill="#CBE4D7">5 Bases de Datos</text>
+
+      <rect x="136" y="60" width="356" height="94" rx="5" fill="#F7FAF8" stroke="#134230" stroke-width="1.6"/>
+      <rect x="136" y="60" width="356" height="23" rx="4" fill="#134230"/>
+      <text x="314" y="75.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">REGISTROS IDENTIFICADOS (2021–2026): N = 318</text>
+      <text x="148" y="98" font-size="9.5" fill="#1D2E25">• PubMed / MEDLINE: 112 (35.2%)   • Scopus: 94 (29.6%)</text>
+      <text x="148" y="115" font-size="9.5" fill="#1D2E25">• Web of Science Core Collection: 68 (21.4%)</text>
+      <text x="148" y="132" font-size="9.5" fill="#1D2E25">• Embase: 29 (9.1%)   • LILACS / SciELO: 15 (4.7%)</text>
+      <text x="148" y="147" font-size="8.8" font-weight="700" fill="#1F6347">Ventana: 1 de enero de 2021 al 13 de noviembre de 2026</text>
+
+      <line x1="492" y1="107" x2="532" y2="107" stroke="#AE3D2B" stroke-width="2.2"/>
+      <polygon points="532,101 544,107 532,113" fill="#AE3D2B"/>
+
+      <rect x="546" y="60" width="320" height="94" rx="5" fill="#FDF5F4" stroke="#AE3D2B" stroke-width="1.5"/>
+      <rect x="546" y="60" width="320" height="23" rx="4" fill="#AE3D2B"/>
+      <text x="706" y="75.5" text-anchor="middle" font-size="10.3" font-weight="800" fill="#FFFFFF">DUPLICADOS ELIMINADOS: n = 124 (39.0%)</text>
+      <text x="558" y="99" font-size="9.4" fill="#3D1C17">• Coincidencia exacta por DOI: 89 (71.8%)</text>
+      <text x="558" y="116" font-size="9.4" fill="#3D1C17">• Coincidencia por PMID / Scopus EID: 24 (19.4%)</text>
+      <text x="558" y="133" font-size="9.4" fill="#3D1C17">• Emparejamiento título + autor + año: 11 (8.9%)</text>
+      <text x="558" y="147" font-size="9.2" font-weight="700" fill="#123C2B">► Registros únicos retenidos: n = 194 (61.0%)</text>
+
+      <!-- Flecha Fase 1 -> 2 -->
+      <line x1="314" y1="154" x2="314" y2="173" stroke="#1F6347" stroke-width="2.2"/>
+      <polygon points="308,172 314,183 320,172" fill="#1F6347"/>
+
+      <!-- FASE 2 -->
+      <rect x="14" y="185" width="110" height="86" rx="5" fill="#184C37"/>
+      <text x="69" y="218" text-anchor="middle" font-size="11" font-weight="800" fill="#F5D585">FASE 2</text>
+      <text x="69" y="235" text-anchor="middle" font-size="9.5" font-weight="700" fill="#FFFFFF">CRIBADO</text>
+      <text x="69" y="249" text-anchor="middle" font-size="8.8" fill="#CBE4D7">Título y Resumen</text>
+
+      <rect x="136" y="185" width="356" height="86" rx="5" fill="#F7FAF8" stroke="#1F6347" stroke-width="1.6"/>
+      <rect x="136" y="185" width="356" height="23" rx="4" fill="#1F6347"/>
+      <text x="314" y="200.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">CRIBADOS EN TÍTULO Y RESUMEN: n = 194</text>
+      <text x="148" y="223" font-size="9.5" fill="#1D2E25">• Evaluación doble ciego por dos revisores independientes</text>
+      <text x="148" y="240" font-size="9.5" font-weight="700" fill="#123C2B">• Concordancia Kappa de Cohen = 0.86 | PABAK = 0.90</text>
+      <text x="148" y="257" font-size="9.5" fill="#1D2E25">• 11 discrepancias adjudicadas | 5/5 estudios semilla retenidos</text>
+
+      <line x1="492" y1="228" x2="532" y2="228" stroke="#AE3D2B" stroke-width="2.2"/>
+      <polygon points="532,222 544,228 532,234" fill="#AE3D2B"/>
+
+      <rect x="546" y="185" width="320" height="86" rx="5" fill="#FDF5F4" stroke="#AE3D2B" stroke-width="1.5"/>
+      <rect x="546" y="185" width="320" height="23" rx="4" fill="#AE3D2B"/>
+      <text x="706" y="200.5" text-anchor="middle" font-size="10.3" font-weight="800" fill="#FFFFFF">EXCLUIDOS EN TÍTULO Y RESUMEN: n = 156 (80.4%)</text>
+      <text x="558" y="222" font-size="9.2" fill="#3D1C17">• Sin evaluación de virus Totiviridae: 62 (39.7%)</text>
+      <text x="558" y="237" font-size="9.2" fill="#3D1C17">• Otros parásitos no flagelados o vectores: 44 (28.2%)</text>
+      <text x="558" y="252" font-size="9.2" fill="#3D1C17">• Fuera de 2021–2026: 31 (19.9%) | Solo in silico: 19 (12.2%)</text>
+
+      <!-- Flecha Fase 2 -> 3 -->
+      <line x1="314" y1="271" x2="314" y2="290" stroke="#2D7B5B" stroke-width="2.2"/>
+      <polygon points="308,289 314,300 320,289" fill="#2D7B5B"/>
+
+      <!-- FASE 3 -->
+      <rect x="14" y="302" width="110" height="84" rx="5" fill="#277354"/>
+      <text x="69" y="335" text-anchor="middle" font-size="11" font-weight="800" fill="#F5D585">FASE 3</text>
+      <text x="69" y="352" text-anchor="middle" font-size="9.5" font-weight="700" fill="#FFFFFF">ELEGIBILIDAD</text>
+      <text x="69" y="366" text-anchor="middle" font-size="8.8" fill="#E3F2EA">Texto Completo</text>
+
+      <rect x="136" y="302" width="356" height="84" rx="5" fill="#F7FAF8" stroke="#2D7B5B" stroke-width="1.6"/>
+      <rect x="136" y="302" width="356" height="23" rx="4" fill="#2D7B5B"/>
+      <text x="314" y="317.5" text-anchor="middle" font-size="10.5" font-weight="800" fill="#FFFFFF">EVALUADOS A TEXTO COMPLETO: n = 38 (100% RECUPERADOS)</text>
+      <text x="148" y="340" font-size="9.5" fill="#1D2E25">• Evaluación de criterios PECO y verificación 1:1 de cada DOI</text>
+      <text x="148" y="357" font-size="9.5" fill="#1D2E25">• Escalas de riesgo de sesgo aplicadas según diseño:</text>
+      <text x="148" y="373" font-size="9.2" font-weight="700" fill="#123C2B">  ROBIS (4), SANRA (5), ROBINS-I (5), JBI/OHAT (6), QUADAS-2 (1)</text>
+
+      <line x1="492" y1="344" x2="532" y2="344" stroke="#AE3D2B" stroke-width="2.2"/>
+      <polygon points="532,338 544,344 532,350" fill="#AE3D2B"/>
+
+      <rect x="546" y="302" width="320" height="84" rx="5" fill="#FDF5F4" stroke="#AE3D2B" stroke-width="1.5"/>
+      <rect x="546" y="302" width="320" height="23" rx="4" fill="#AE3D2B"/>
+      <text x="706" y="317.5" text-anchor="middle" font-size="10.3" font-weight="800" fill="#FFFFFF">EXCLUIDOS EN TEXTO COMPLETO: n = 17 (44.7%)</text>
+      <text x="558" y="340" font-size="9.3" fill="#3D1C17">• Solo prevalencia sin desenlace inmune ni clínico: 9 (52.9%)</text>
+      <text x="558" y="357" font-size="9.3" fill="#3D1C17">• Cohorte duplicada o datos insuficientes: 5 (29.4%)</text>
+      <text x="558" y="374" font-size="9.3" fill="#3D1C17">• Cartas al editor / comentarios sin datos primarios: 3 (17.6%)</text>
+
+      <!-- Flecha Fase 3 -> 4 -->
+      <line x1="314" y1="386" x2="314" y2="405" stroke="#C58B24" stroke-width="2.4"/>
+      <polygon points="308,404 314,415 320,404" fill="#C58B24"/>
+
+      <!-- FASE 4 -->
+      <rect x="14" y="417" width="110" height="80" rx="5" fill="#B57B1B"/>
+      <text x="69" y="449" text-anchor="middle" font-size="11" font-weight="800" fill="#FFFFFF">FASE 4</text>
+      <text x="69" y="466" text-anchor="middle" font-size="9.5" font-weight="700" fill="#FFF7E2">INCLUSIÓN</text>
+      <text x="69" y="480" text-anchor="middle" font-size="9.0" font-weight="700" fill="#FFFFFF">N = 21 Estudios</text>
+
+      <rect x="136" y="417" width="730" height="80" rx="5" fill="#EAF4EE" stroke="#123C2B" stroke-width="1.8"/>
+      <rect x="136" y="417" width="730" height="23" rx="4" fill="#123C2B"/>
+      <text x="501" y="432.5" text-anchor="middle" font-size="10.8" font-weight="800" fill="#F5D585">ESTUDIOS INCLUIDOS EN LA SÍNTESIS SISTEMÁTICA (N = 21 — 100% DOIs VERIFICADOS)</text>
+      <text x="150" y="456" font-size="9.8" font-weight="700" fill="#123C2B">• Leishmania spp. + LRV1 / LRV2: 11 estudios (52.4%)   |   • Trichomonas vaginalis + TVV1–TVV5: 7 estudios (33.3%)</text>
+      <text x="150" y="473" font-size="9.8" font-weight="700" fill="#123C2B">• Estudios comparativos multi-protozoo (Matrioska Microbiana / vesículas extracelulares): 3 estudios (14.3%)</text>
+      <text x="150" y="489" font-size="9.4" fill="#1F4A36">Calidad Metodológica: 14 riesgo bajo (66.7%) • 3 bajo-moderado (14.3%) • 4 moderado (19.0%) • 0 riesgo crítico (0.0%)</text>
+    </svg>
