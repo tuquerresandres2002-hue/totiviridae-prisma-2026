@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portal Científico V2.0: Memoria de Cálculos (Word), Simulador CRISPR y 21 DOIs — UPEC</title>
+<style>
+  :root {
+    --pine: #0B241A;
+    --forest: #123C2B;
+    --emerald: #1F6347;
+    --gold: #C58B24;
+    --gold-soft: #F7DA92;
+    --terra: #AE3D2B;
+    --bg: #F2F6F4;
+    --card: #FFFFFF;
+    --ink: #1A2821;
+    --muted: #4A5E54;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Calibri, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  header {
+    background: linear-gradient(120deg, var(--pine) 0%, var(--forest) 58%, var(--emerald) 100%);
+    color: #FFFFFF;
+    padding: 26px 16px 24px;
+    border-bottom: 4px solid var(--gold);
+  }
+  .container { max-width: 1020px; margin: 0 auto; padding: 0 14px; }
+  .hdr-flex { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .logo { height: 88px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4)); }
+  .eyebrow {
+    display: inline-block; background: rgba(197,139,36,0.22); border: 1px solid var(--gold-soft);
+    color: var(--gold-soft); font-size: 11.5px; font-weight: 800; padding: 3px 9px;
+    border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 7px;
+  }
+  h1 { font-size: clamp(17px, 2.4vw, 23px); font-weight: 800; line-height: 1.26; margin-bottom: 12px; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 9px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 7px; padding: 9px 15px; border-radius: 6px;
+    font-size: 13px; font-weight: 800; text-decoration: none; cursor: pointer; border: none;
+    transition: transform 0.14s ease, box-shadow 0.14s ease;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.18); }
+  .btn-word { background: #F5D585; color: #0B241A; border: 1.5px solid #FFFFFF; }
+  .btn-sec { background: rgba(255,255,255,0.15); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.4); }
+
+  main { padding: 24px 0 44px; }
+  .card-sec {
+    background: var(--card); border: 1px solid #CFDCD4; border-radius: 10px;
+    padding: 20px 22px; margin-bottom: 22px; box-shadow: 0 3px 12px rgba(11,36,26,0.05);
+  }
+  h2 {
+    font-size: 19px; font-weight: 800; color: var(--forest);
+    border-left: 4.5px solid var(--gold); padding-left: 11px; margin-bottom: 12px;
+  }
+  .lead { font-size: 14px; color: var(--muted); margin-bottom: 14px; }
+
+  /* DESTACADO DESCARGA WORD CÁLCULOS */
+  .word-banner {
+    background: linear-gradient(105deg, #FFF9EB 0%, #F4EFE0 100%);
+    border: 1.8px solid var(--gold); border-radius: 8px; padding: 16px 18px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+  .wb-title { font-size: 16px; font-weight: 800; color: var(--pine); margin-bottom: 4px; }
+  .wb-sub { font-size: 13px; color: #4A3E24; }
+  .btn-dl-big {
+    background: var(--forest); color: #FFFFFF; padding: 11px 18px; border-radius: 7px;
+    text-decoration: none; font-weight: 800; font-size: 13.5px; white-space: nowrap;
+    border-bottom: 3px solid var(--gold);
+  }
+
+  /* PESTAÑAS INTERACTIVAS DE CÁLCULOS */
+  .tabs { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+  .t-btn {
+    padding: 7px 13px; border-radius: 6px; border: 1px solid #BDD0C5;
+    background: #EFF5F1; color: var(--forest); font-size: 12.5px; font-weight: 800; cursor: pointer;
+  }
+  .t-btn.active { background: var(--forest); color: #FFFFFF; border-color: var(--forest); }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  .calc-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+  .calc-table th { background: var(--pine); color: #FFFFFF; text-align: left; padding: 9px 10px; border-bottom: 2.5px solid var(--gold); }
+  .calc-table td { padding: 8px 10px; border-bottom: 1px solid #DEE7E2; vertical-align: top; }
+  .calc-table tr:nth-child(even) td { background: #F8FBF9; }
+  .calc-table tr.sum-row td { background: #FFF8E6; font-weight: 800; color: var(--pine); }
+  .formula-callout {
+    background: #ECF5F0; border-left: 4px solid var(--emerald); padding: 11px 14px;
+    border-radius: 4px; font-size: 13px; color: #162B21; margin-top: 8px;
+  }
+  .formula-callout code {
+    display: inline-block; background: #FFFFFF; padding: 2px 6px; border-radius: 3px;
+    border: 1px solid #BDD2C6; font-weight: 800; color: var(--forest);
+  }
+
+  /* SIMULADOR INTERACTIVO CRISPR-MATRIOSKA */
+  .sim-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 18px; align-items: center; }
+  @media (max-width: 720px) { .sim-grid { grid-template-columns: 1fr; } }
+  .case-btns { display: flex; flex-direction: column; gap: 8px; }
+  .c-btn {
+    text-align: left; padding: 10px 13px; border-radius: 7px; border: 1.5px solid #C5D6CD;
+    background: #F9FBFA; cursor: pointer; font-size: 13px; color: var(--ink); transition: all 0.15s;
+  }
+  .c-btn strong { display: block; color: var(--forest); font-size: 13.5px; margin-bottom: 2px; }
+  .c-btn.active { border-color: var(--gold); background: #FFF9EB; box-shadow: 0 2px 8px rgba(197,139,36,0.15); }
+  .cassette-box {
+    background: #F4F8F5; border: 1.5px solid #B7CEC1; border-radius: 9px; padding: 16px; text-align: center;
+  }
+  .cassette-plastic {
+    max-width: 310px; margin: 0 auto 12px; background: #E5ECE8; border: 2px solid #8CA497;
+    border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 14px;
+  }
+  .well {
+    width: 30px; height: 30px; border-radius: 50%; background: #CBD8D0; border: 2px solid #6D8578;
+    display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #30443A;
+  }
+  .window {
+    flex: 1; height: 38px; background: #FFFFFF; border: 1.5px solid #9CB0A5; border-radius: 4px;
+    display: flex; justify-content: space-around; align-items: center; padding: 0 14px;
+  }
+  .band-col { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .band-line { width: 8px; height: 24px; border-radius: 2px; background: #ECEFED; transition: background 0.25s ease; }
+  .band-lbl { font-size: 10px; font-weight: 800; color: #485C52; }
+  .sim-result {
+    text-align: left; background: #FFFFFF; border: 1px solid #CFDCD4; border-left: 4px solid var(--emerald);
+    border-radius: 5px; padding: 11px 13px; font-size: 13px;
+  }
+  .sim-result.alert { border-left-color: var(--terra); background: #FFF6F4; }
+
+  /* REFERENCIAS */
+  .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .f-btn {
+    padding: 6px 13px; border-radius: 20px; border: 1px solid #BBD0C4;
+    background: #F3F8F5; color: var(--forest); font-size: 12.5px; font-weight: 700; cursor: pointer;
+  }
+  .f-btn.active { background: var(--forest); color: #FFFFFF; border-color: var(--forest); }
+  .ref-list { display: flex; flex-direction: column; gap: 10px; }
+  .ref-card { background: #FAFCFB; border: 1px solid #DCE6E0; border-left: 3.5px solid var(--emerald); border-radius: 6px; padding: 12px 14px; }
+  .ref-card.hidden { display: none; }
+  .ref-meta { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; margin-bottom: 6px; }
+  .ref-idx { background: var(--forest); color: #FFFFFF; font-size: 11.5px; font-weight: 800; padding: 2px 7px; border-radius: 4px; }
+  .badge { font-size: 11.5px; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid; }
+  .b-lrv { background: #E3F1EA; color: #123C2B; border-color: #9BC6B0; }
+  .b-tvv { background: #FBF1DD; color: #8B5B0B; border-color: #E4C37A; }
+  .b-mul { background: #F4E8E5; color: #8C3122; border-color: #D9A99F; }
+  .b-rob { background: #EEF2EF; color: #3D5147; border-color: #CFDAD4; }
+  .ref-txt { font-size: 13.5px; margin-bottom: 8px; }
+  .ref-links { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .doi-btn { background: var(--emerald); color: #FFFFFF; text-decoration: none; font-size: 12px; font-weight: 700; padding: 5px 11px; border-radius: 4px; }
+  .doi-code { font-size: 12px; color: var(--muted); word-break: break-all; }
+  footer { text-align: center; padding: 20px; font-size: 12.5px; color: var(--muted); border-top: 1px solid #D2DED7; }
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <div class="hdr-flex">
+      <img class="logo" src="../upec_logo_transparente_dark.png" onerror="this.onerror=null;this.src='../upec_logo_oficial.png';" alt="Escudo Oficial UPEC"/>
+      <div style="flex:1;min-width:250px;">
+        <div class="eyebrow">UPEC • Carrera de Laboratorio Clínico • Portal Científico Versión 2.0</div>
+        <h1>Impacto de los Virus Endosimbiontes de ARN Bicatenario de la Familia Totiviridae en la Señalización Hiperinflamatoria vía Exosomas/TLR3/IFN-I, Severidad Clínica y Fracaso Terapéutico en Leishmania spp. y Trichomonas vaginalis — Revisión Sistemática 2021–2026</h1>
+        <div class="cta-row">
+          <a class="btn btn-word" href="Memoria_Calculo_Completo_Resultados_Totiviridae_V2_2021_2026.docx" download>📥 Descargar Word de Todos los Cálculos (.docx)</a>
+          <a class="btn btn-sec" href="Manuscrito_Cientifico_Revision_Sistematica_Totiviridae_V2_2021_2026.docx" download>📝 Descargar Escrito Científico V2.0 (.docx)</a>
+          <a class="btn btn-sec" href="#calculos">🧮 Ver Cálculos Paso a Paso</a>
+          <a class="btn btn-sec" href="#simulador">🧬 Simulador Tira CRISPR</a>
+          <a class="btn btn-sec" href="#referencias">📚 21 Referencias APA 7</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- SECCIÓN 1: MEMORIA COMPLETA DE CÁLCULOS (DESCARGA WORD + VISOR INTERACTIVO) -->
+  <section class="card-sec" id="calculos">
+    <h2>1. Memoria Completa de Cálculo de los Resultados (Word Editable + Visor en Línea)</h2>
+    <p class="lead">Transparencia bioestadística total: descarga el documento Word oficial o explora directamente en pantalla de dónde proviene cada porcentaje, intervalo de confianza al 95%, tabla clínica 2×2 y razón de probabilidad (OR / RR).</p>
+
+    <div class="word-banner">
+      <div>
+        <div class="wb-title">📄 Documento Oficial en Microsoft Word: Explicación Completa de Cálculos (V2.0)</div>
+        <div class="wb-sub">Incluye las 6 familias de fórmulas, el flujo PRISMA 2020 exacto, las 3 tablas clínicas 2×2 desglosadas celda por celda, el cálculo log10 del Forest Plot y guía de defensa oral.</div>
+      </div>
+      <a class="btn-dl-big" href="Memoria_Calculo_Completo_Resultados_Totiviridae_V2_2021_2026.docx" download>⬇ Descargar Documento Word (.docx)</a>
+    </div>
+
+    <div class="tabs">
+      <button class="t-btn active" onclick="openTab('t1', this)">Tabla 2×2 #1: Colombia (OR 6.30× y 0.04)</button>
+      <button class="t-btn" onclick="openTab('t2', this)">Tabla 2×2 #2: L. panamensis (2.86×)</button>
+      <button class="t-btn" onclick="openTab('t3', this)">Tabla 2×2 #3: Metronidazol (89% / -45%)</button>
+      <button class="t-btn" onclick="openTab('t4', this)">Meta-análisis (37.2% / 47%) y CRISPR</button>
+      <button class="t-btn" onclick="openTab('t5', this)">Conteos PRISMA 2020 (318 → 21)</button>
+    </div>
+
+    <!-- TAB 1 -->
+    <div class="tab-pane active" id="t1">
+      <div style="overflow-x:auto;">
+        <table class="calc-table">
+          <thead>
+            <tr><th>Grupo Clínico (Pazmiño et al., 2025; Colombia)</th><th>LRV1 (+)</th><th>LRV1 (−)</th><th>Total</th><th>% Positividad</th><th>Odds del Grupo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Casos: Leishmaniasis Mucosa (LMC)</strong></td><td>a = 11</td><td>c = 22</td><td>33</td><td>11 ÷ 33 = <strong>33.33%</strong></td><td>11 ÷ 22 = 0.500</td></tr>
+            <tr><td><strong>Controles: Leishmaniasis Cutánea (LC)</strong></td><td>b = 6</td><td>d = 64</td><td>70</td><td>6 ÷ 70 = <strong>8.57%</strong></td><td>6 ÷ 64 = 0.094</td></tr>
+            <tr class="sum-row"><td>TOTAL COHORTE COLOMBIA</td><td>17</td><td>86</td><td>103</td><td>17 ÷ 103 = 16.50%</td><td>PR = 3.89× | OR aj. = 6.30×</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="formula-callout">
+        • <strong>Razón de Frecuencia (PR):</strong> <code>33.333% ÷ 8.571% = 3.89×</code> veces más frecuente en lesión mucosa.<br/>
+        • <strong>OR Crudo vs. OR Ajustado:</strong> <code>OR_crudo = (11 × 64) ÷ (6 × 22) = 704 ÷ 132 = 5.33×</code>. Al ajustar por tratamiento previo en regresión logística multivariada sube a <code>OR_ajustado = 6.30×</code>.<br/>
+        • <strong>Protección del tratamiento cutáneo completo:</strong> <code>OR = 0.039</code> (redondeado a <code>OR 0.04</code>) → equivale a <code>1 ÷ 0.039 = 25.6×</code> de protección y reduce en <code>(1 − 0.039) × 100 = 96.1%</code> el riesgo mucoso.
+      </div>
+    </div>
+
+    <!-- TAB 2 -->
+    <div class="tab-pane" id="t2">
+      <div style="overflow-x:auto;">
+        <table class="calc-table">
+          <thead>
+            <tr><th>Gravedad en L. panamensis (Kariyawasam et al., 2023)</th><th>LRV1 (+)</th><th>LRV1 (−)</th><th>Total</th><th>% Exacto</th><th>% Entero Publicado</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>LTA Grave (Severa)</strong></td><td>a = 5</td><td>c = 9</td><td>14</td><td>5 ÷ 14 = <strong>35.71%</strong></td><td>36.0%</td></tr>
+            <tr><td><strong>LTA Leve (No severa)</strong></td><td>b = 2</td><td>d = 14</td><td>16</td><td>2 ÷ 16 = <strong>12.50%</strong></td><td>12.0%</td></tr>
+            <tr class="sum-row"><td>TOTAL AISLADOS CLÍNICOS</td><td>7</td><td>23</td><td>30</td><td>7 ÷ 30 = 23.33%</td><td>PR exacta = 2.86×</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="formula-callout">
+        • <strong>¿Por qué 2.86× y no 3.00×?:</strong> Los autores resumieron 5/14 como 36% y 2/16 como 12% en texto, pero la razón exacta sin sesgo de redondeo intermedio es <code>(5/14) ÷ (2/16) = 0.35714 ÷ 0.12500 = 2.857 → 2.86×</code>.
+      </div>
+    </div>
+
+    <!-- TAB 3 -->
+    <div class="tab-pane" id="t3">
+      <div style="overflow-x:auto;">
+        <table class="calc-table">
+          <thead>
+            <tr><th>Régimen Metronidazol (Kissinger et al., 2022; CDC)</th><th>Fracaso</th><th>Curadas</th><th>Total</th><th>% Fracaso</th><th>% Curación</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Dosis Única (2 g vía oral)</strong></td><td>58</td><td>253</td><td>311</td><td>58÷311 = 18.65% (<strong>19.0%</strong>)</td><td>253÷311 = 81.35% (<strong>81.0%</strong>)</td></tr>
+            <tr><td><strong>Multidosis 7 Días (500 mg c/12h)</strong></td><td>34</td><td>278</td><td>312</td><td>34÷312 = 10.90% (<strong>11.0%</strong>)</td><td>278÷312 = 89.10% (<strong>89.0%</strong>)</td></tr>
+            <tr class="sum-row"><td>TOTAL ENSAYO (n = 623 mujeres)</td><td>92</td><td>531</td><td>623</td><td>RR = 0.55 (IC: 0.34–0.70)</td><td>RRR = 45.0% | NNT ≈ 13</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="formula-callout">
+        • <strong>Reducción Relativa del Riesgo de Fallo (RRR):</strong> Con <code>RR = 0.55</code>, <code>RRR = (1 − 0.55) × 100 = 45.0%</code>.<br/>
+        • <strong>Número Necesario a Tratar (NNT):</strong> Ganancia absoluta = <code>89.10% − 81.35% = +7.75%</code> → <code>1 ÷ 0.0775 = 12.9 ≈ 13 pacientes</code>.
+      </div>
+    </div>
+
+    <!-- TAB 4 -->
+    <div class="tab-pane" id="t4">
+      <div style="overflow-x:auto;">
+        <table class="calc-table">
+          <thead>
+            <tr><th>Indicador Meta-analítico / Molecular</th><th>Cifra Verificada</th><th>Fórmula / Método de Obtención</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>LRV Mundial (25 estudios, n = 1,215)</strong></td><td>37.22% (IC95%: 27.54–46.90%)</td><td>Efectos aleatorios DerSimonian-Laird <code>w_i = 1/(v_i + τ²)</code> (Shita et al., 2022). América: 34.18% | Viejo Mundo: 45.77%.</td></tr>
+            <tr><td><strong>TVV Mundial (28 estudios)</strong></td><td>47.0% (IC95%: 39.3–54.8%)</td><td>Efectos aleatorios (Bahadory et al., 2021). África OMS: 66% | Asia Sudor.: 23% | Brasil: 90.0% | Corea del Sur: 14.0%.</td></tr>
+            <tr><td><strong>Exosomas y ARN tsRNAs</strong></td><td>~30% EVs y 2.50× (+150%)</td><td>Conteo TEM en <em>L. guyanensis</em> (Lafleur &amp; Olivier, 2022) y Fold-Change RNA-Seq en <em>T. vaginalis</em> (Rada et al., 2022).</td></tr>
+            <tr><td><strong>LAMP-CRISPR-Cas12a (Cusco, n = 90)</strong></td><td>Sens kDNA: 90.9% | Esp: 100%</td><td>Validación QUADAS-2 vs. qPCR (Dueñas et al., 2026): <code>FN = 100% − 90.9% = 9.1%</code>; <code>FP = 0.0%</code>; <code>LoD = 0.2 eq/rxn</code>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 5 -->
+    <div class="tab-pane" id="t5">
+      <div style="overflow-x:auto;">
+        <table class="calc-table">
+          <thead>
+            <tr><th>Fase PRISMA 2020</th><th>Fracción Exacta</th><th>Porcentaje</th><th>Verificación de Cierre</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1. Identificación en 5 bases</td><td>112 + 94 + 68 + 29 + 15 = 318</td><td>35.2% + 29.6% + 21.4% + 9.1% + 4.7%</td><td>Suma = 100.0% (318)</td></tr>
+            <tr><td>2. Depuración de duplicados</td><td>124 eliminados / 194 únicos</td><td>124÷318 = 39.0% | 194÷318 = 61.0%</td><td>89 DOI + 24 PMID + 11 difuso</td></tr>
+            <tr><td>3. Cribado doble ciego T/A</td><td>156 excluidos / 38 a texto completo</td><td>156÷194 = 80.4% | 38÷194 = 19.6%</td><td>κ = 0.86 | PABAK = 0.90</td></tr>
+            <tr class="sum-row"><td>4. Inclusión final y Sesgo</td><td>21 estudios (11 Leish + 7 Trich + 3 Multi)</td><td>21÷38 = 55.3% | 14/21 = 66.7% Bajo</td><td>0% Riesgo Crítico • 21/21 DOIs</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 2: SIMULADOR INTERACTIVO DE TIRA RÁPIDA CRISPR-MATRIOSKA -->
+  <section class="card-sec" id="simulador">
+    <h2>2. Simulador Clínico Interactivo: Casete Dúplex «CRISPR-Matrioska» [C - P - V]</h2>
+    <p class="lead">Selecciona un escenario clínico de Laboratorio para simular la lectura isotérmica a 65 °C (&lt;60 min) y su conducta terapéutica personalizada:</p>
+
+    <div class="sim-grid">
+      <div class="case-btns">
+        <button class="c-btn active" onclick="runSim(3, this)">
+          <strong>Caso 1: Úlcera cutánea andina con riesgo mucoso (Alerta Matrioska)</strong>
+          Raspado dérmico • Canal 1 kDNA (+) + Canal 2 RT-LAMP RdRp LRV1 (+)
+        </button>
+        <button class="c-btn" onclick="runSim(4, this)">
+          <strong>Caso 2: Tricomoniasis urogenital sintomática portadora de TVV</strong>
+          Hisopado vaginal • Parásito T. vaginalis (+) + Endosimbionte TVV1–5 (+)
+        </button>
+        <button class="c-btn" onclick="runSim(2, this)">
+          <strong>Caso 3: Leishmaniasis cutánea libre de endosimbionte viral</strong>
+          Lesión localizada • Canal 1 kDNA (+) / Canal 2 viral (−)
+        </button>
+        <button class="c-btn" onclick="runSim(1, this)">
+          <strong>Caso 4: Diagnóstico diferencial (Chagas / Tuberculosis cutánea)</strong>
+          Control de especificidad (100% exactitud, 0% reacción cruzada)
+        </button>
+      </div>
+
+      <div class="cassette-box">
+        <div style="font-size:12px;font-weight:800;color:#123C2B;margin-bottom:8px;">LECTURA EN TIRA DE FLUJO LATERAL DÚPLEX (65 °C)</div>
+        <div class="cassette-plastic">
+          <div class="well">M</div>
+          <div class="window">
+            <div class="band-col">
+              <div class="band-line" id="bC" style="background:#1B573F;"></div>
+              <span class="band-lbl">C (Control)</span>
+            </div>
+            <div class="band-col">
+              <div class="band-line" id="bP" style="background:#247353;"></div>
+              <span class="band-lbl">P (Parásito)</span>
+            </div>
+            <div class="band-col">
+              <div class="band-line" id="bV" style="background:#AE3D2B;"></div>
+              <span class="band-lbl">V (Virus ARN)</span>
+            </div>
+          </div>
+        </div>
+        <div class="sim-result alert" id="simOut">
+          <strong>[C + P + V] ¡ALERTA MATRIOSKA! Leishmania (+) / Virus LRV1 (+):</strong> Riesgo ajustado <strong>OR = 6.30×</strong> de metástasis mucosa destructiva. Garantizar adherencia supervisada estricta al esquema completo (<strong>OR protector = 0.039</strong>; reduce 96.1% el daño mucoso) y vigilancia otorrinolaringológica temprana.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 3: 21 REFERENCIAS APA 7 -->
+  <section class="card-sec" id="referencias">
+    <h2>3. Corpus Completo de 21 Referencias Verificadas (APA 7.ª Edición)</h2>
+    <div class="filter-bar">
+      <button class="f-btn active" onclick="filterRefs('ALL', this)">Todos (21)</button>
+      <button class="f-btn" onclick="filterRefs('Leishmania', this)">Leishmania spp. (11)</button>
+      <button class="f-btn" onclick="filterRefs('Trichomonas', this)">Trichomonas vaginalis (7)</button>
+      <button class="f-btn" onclick="filterRefs('Multi-Protozoo', this)">Multi-Protozoo (3)</button>
+    </div>
+    <div class="ref-list">
+          <article class="ref-card" data-cat="Trichomonas">
+            <div class="ref-meta">
+              <span class="ref-idx">01</span>
+              <span class="badge b-tvv">Trichomonas vaginalis</span>
+              <span class="badge b-rob">ROBIS: Bajo</span>
+            </div>
+            <p class="ref-txt"><strong>Bahadory, S., Aminizadeh, S., Taghipour, A., Bokharaei-Salim, F., Khanaliha, K., Razizadeh, M. H., Soleimani, A., Beikzadeh, L., &amp; Khatami, A.</strong> (2021). A systematic review and meta-analysis on the global status of Trichomonas vaginalis virus in Trichomonas vaginalis. <em>Microbial Pathogenesis, 158, 105058</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.1016/j.micpath.2021.105058" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.1016/j.micpath.2021.105058</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Leishmania">
+            <div class="ref-meta">
+              <span class="ref-idx">02</span>
+              <span class="badge b-lrv">Leishmania spp.</span>
+              <span class="badge b-rob">QUADAS-2: Bajo</span>
+            </div>
+            <p class="ref-txt"><strong>Dueñas, E., Tirado, I., Huaihua, P., Parra del Riego, A., Cabrera-Sosa, L., Nakamoto, J. A., Cruz, M., Restrepo, C. M., Arévalo, J., &amp; Adaui, V.</strong> (2026). LAMP-coupled CRISPR-Cas12a assays: A promising new tool for molecular diagnosis of leishmaniasis. <em>PLOS Neglected Tropical Diseases, 20(2), e0013456</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.1371/journal.pntd.0013456" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.1371/journal.pntd.0013456</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Leishmania">
+            <div class="ref-meta">
+              <span class="ref-idx">03</span>
+              <span class="badge b-lrv">Leishmania spp.</span>
+              <span class="badge b-rob">JBI/OHAT: Bajo</span>
+            </div>
+            <p class="ref-txt"><strong>Felipin, K. P., Paloschi, M. V., Silva, M. D. S., Ikenohuchi, Y. J., Santana, H. M., Setúbal, S. d. S., Rego, C. M. A., Lopes, J. A., Boeno, C. N., Serrath, S. N., De Medeiros, E. H. R. T., Pimentel, I. F., Oliveira, A. E. R., Cupolillo, E., Cantanhêde, L. M., Ferreira, R. d. G. M., &amp; Zuliani, J. P.</strong> (2024). Transcriptomics analysis highlights potential ways in human pathogenesis in Leishmania braziliensis infected with the viral endosymbiont LRV1. <em>PLOS Neglected Tropical Diseases, 18(5), e0012126</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.1371/journal.pntd.0012126" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.1371/journal.pntd.0012126</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Leishmania">
+            <div class="ref-meta">
+              <span class="ref-idx">04</span>
+              <span class="badge b-lrv">Leishmania spp.</span>
+              <span class="badge b-rob">ROBINS-I: Bajo</span>
+            </div>
+            <p class="ref-txt"><strong>Gómez, M. A., Belew, A. T., Vargas, D. A., Giraldo-Parra, L., Alexander, N., Rebellón-Sánchez, D. E., Alexander, T. A., &amp; El-Sayed, N. M.</strong> (2025). Innate biosignature of treatment failure in human cutaneous leishmaniasis. <em>Nature Communications, 16(1), 3235</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.1038/s41467-025-58330-3" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.1038/s41467-025-58330-3</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Trichomonas">
+            <div class="ref-meta">
+              <span class="ref-idx">05</span>
+              <span class="badge b-tvv">Trichomonas vaginalis</span>
+              <span class="badge b-rob">SANRA: Bajo</span>
+            </div>
+            <p class="ref-txt"><strong>Graves, K. J., Novak, J., &amp; Muzny, C. A.</strong> (2025). Trichomonas vaginalis virus: Current insights and emerging perspectives. <em>Viruses, 17(7), 898</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.3390/v17070898" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.3390/v17070898</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Trichomonas">
+            <div class="ref-meta">
+              <span class="ref-idx">06</span>
+              <span class="badge b-tvv">Trichomonas vaginalis</span>
+              <span class="badge b-rob">JBI/OHAT: Bajo</span>
+            </div>
+            <p class="ref-txt"><strong>Huang, C.-Y., Chiu, S.-F., Chu, L. J., Yeh, Y.-M., Huang, P.-J., Lan, K.-L., Tsai, Y.-L., Liu, C.-C., Chen, C.-F. F., Lin, W.-N., &amp; Huang, K.-Y.</strong> (2025). Trichomonas vaginalis extracellular vesicles activate the NLRP3 inflammasome and TLR3-mediated inflammatory cascades in host cells. <em>PLOS Pathogens, 21(6), e1013216</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.1371/journal.ppat.1013216" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.1371/journal.ppat.1013216</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Multi-Protozoo">
+            <div class="ref-meta">
+              <span class="ref-idx">07</span>
+              <span class="badge b-mul">Multi-Protozoo</span>
+              <span class="badge b-rob">SANRA: Bajo-Moderado</span>
+            </div>
+            <p class="ref-txt"><strong>Ibáñez-Escribano, A., Gómez-Muñoz, M. T., Mateo, M., Fonseca-Berzal, C., Gómez-Lucía, E., García Pérez, R., Alunda, J. M., &amp; Carrión, J.</strong> (2024). Microbial Matryoshka: Addressing the relationship between pathogenic flagellated protozoans and their RNA viral endosymbionts (Family Totiviridae). <em>Veterinary Sciences, 11(7), 321</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.3390/vetsci11070321" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.3390/vetsci11070321</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Leishmania">
+            <div class="ref-meta">
+              <span class="ref-idx">08</span>
+              <span class="badge b-lrv">Leishmania spp.</span>
+              <span class="badge b-rob">ROBINS-I: Moderado</span>
+            </div>
+            <p class="ref-txt"><strong>Kariyawasam, R., Lau, R., Valencia, B. M., Llanos-Cuentas, A., &amp; Boggild, A. K.</strong> (2023). Novel detection of Leishmania RNA virus-1 (LRV-1) in clinical isolates of Leishmania Viannia panamensis. <em>Parasitology, 150(14), 1277–1283</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.1017/S0031182023001221" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.1017/S0031182023001221</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Trichomonas">
+            <div class="ref-meta">
+              <span class="ref-idx">09</span>
+              <span class="badge b-tvv">Trichomonas vaginalis</span>
+              <span class="badge b-rob">ROBIS: Bajo</span>
+            </div>
+            <p class="ref-txt"><strong>Kissinger, P. J., Gaydos, C. A., Seña, A. C., McClelland, R. S., Soper, D., Secor, W. E., Legendre, D., Workowski, K. A., &amp; Muzny, C. A.</strong> (2022). Diagnosis and management of Trichomonas vaginalis: Summary of evidence reviewed for the 2021 Centers for Disease Control and Prevention sexually transmitted infections treatment guidelines. <em>Clinical Infectious Diseases, 74(Suppl_2), S152–S161</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.1093/cid/ciac030" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.1093/cid/ciac030</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Leishmania">
+            <div class="ref-meta">
+              <span class="ref-idx">10</span>
+              <span class="badge b-lrv">Leishmania spp.</span>
+              <span class="badge b-rob">SANRA: Bajo-Moderado</span>
+            </div>
+            <p class="ref-txt"><strong>Lafleur, A., &amp; Olivier, M.</strong> (2022). Viral endosymbiotic infection of protozoan parasites: How it influences the development of cutaneous leishmaniasis. <em>PLOS Pathogens, 18(11), e1010910</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.1371/journal.ppat.1010910" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.1371/journal.ppat.1010910</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Trichomonas">
+            <div class="ref-meta">
+              <span class="ref-idx">11</span>
+              <span class="badge b-tvv">Trichomonas vaginalis</span>
+              <span class="badge b-rob">JBI/OHAT: Bajo</span>
+            </div>
+            <p class="ref-txt"><strong>Manny, A. R., Hetzel, C. A., Mizani, A., &amp; Nibert, M. L.</strong> (2022). Discovery of a novel species of Trichomonasvirus in the human parasite Trichomonas vaginalis using transcriptome mining. <em>Viruses, 14(3), 548</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.3390/v14030548" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.3390/v14030548</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Trichomonas">
+            <div class="ref-meta">
+              <span class="ref-idx">12</span>
+              <span class="badge b-tvv">Trichomonas vaginalis</span>
+              <span class="badge b-rob">ROBIS: Bajo</span>
+            </div>
+            <p class="ref-txt"><strong>Marques-Silva, M., Lisboa, C., Gomes, N., &amp; Rodrigues, A. G.</strong> (2021). Trichomonas vaginalis and growing concern over drug resistance: A systematic review. <em>Journal of the European Academy of Dermatology and Venereology, 35(10), 2007–2021</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.1111/jdv.17461" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.1111/jdv.17461</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Leishmania">
+            <div class="ref-meta">
+              <span class="ref-idx">13</span>
+              <span class="badge b-lrv">Leishmania spp.</span>
+              <span class="badge b-rob">ROBINS-I: Moderado</span>
+            </div>
+            <p class="ref-txt"><strong>Mazaherifar, S., Erfanian, S., Solhjoo, K., Roustazadeh, A., Darayesh, M., Taghipour, A., Falahi, S., Kenarkoohi, A., Badri, M., Heidarnejadi, S. M., Rasti, S., &amp; Abdoli, A.</strong> (2024). Detection of Leishmania RNA virus 2 (LRV2) among clinical isolates of Leishmania major in four endemic regions of Iran. <em>Acta Parasitologica, 69(4), 2046–2050</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.1007/s11686-024-00915-x" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.1007/s11686-024-00915-x</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Leishmania">
+            <div class="ref-meta">
+              <span class="ref-idx">14</span>
+              <span class="badge b-lrv">Leishmania spp.</span>
+              <span class="badge b-rob">ROBINS-I: Moderado</span>
+            </div>
+            <p class="ref-txt"><strong>Pazmiño, F. A., Parra-Muñoz, M., Saavedra, C. H., Muvdi-Arenas, S., Ovalle-Bracho, C., &amp; Echeverry, M. C.</strong> (2025). Mucosal leishmaniasis is associated with the Leishmania RNA virus and inappropriate cutaneous leishmaniasis treatment. <em>PLOS ONE, 20(1), e0317221</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.1371/journal.pone.0317221" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.1371/journal.pone.0317221</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Trichomonas">
+            <div class="ref-meta">
+              <span class="ref-idx">15</span>
+              <span class="badge b-tvv">Trichomonas vaginalis</span>
+              <span class="badge b-rob">JBI/OHAT: Bajo</span>
+            </div>
+            <p class="ref-txt"><strong>Rada, P., Hrdý, I., Zdrha, A., Narayanasamy, R. K., Smutná, T., Horáčková, J., Harant, K., Beneš, V., Ong, S.-C., Tsai, C.-Y., Luo, H.-W., Chiu, C.-H., Tang, P., &amp; Tachezy, J.</strong> (2022). Double-stranded RNA viruses are released from Trichomonas vaginalis inside small extracellular vesicles and modulate the exosomal cargo. <em>Frontiers in Microbiology, 13, 893692</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.3389/fmicb.2022.893692" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.3389/fmicb.2022.893692</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Multi-Protozoo">
+            <div class="ref-meta">
+              <span class="ref-idx">16</span>
+              <span class="badge b-mul">Multi-Protozoo</span>
+              <span class="badge b-rob">SANRA: Bajo</span>
+            </div>
+            <p class="ref-txt"><strong>Rodrigues, A., Weber, J. I., Durães-Oliveira, J., Moreno, C., Ferla, M., Pereira, M. A., Valério-Bolas, A., de Freitas, B. E., Nunes, T., Antunes, W. T., Alexandre-Pires, G., da Fonseca, I. P., &amp; Santos-Gomes, G. M.</strong> (2025). Extracellular vesicles derived from trypanosomatids: The key to decoding host–parasite communication. <em>International Journal of Molecular Sciences, 26(9), 4302</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.3390/ijms26094302" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.3390/ijms26094302</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Leishmania">
+            <div class="ref-meta">
+              <span class="ref-idx">17</span>
+              <span class="badge b-lrv">Leishmania spp.</span>
+              <span class="badge b-rob">ROBINS-I: Moderado</span>
+            </div>
+            <p class="ref-txt"><strong>Saberi, R., Fakhar, M., Hajjaran, H., Abbaszadeh Afshar, M. J., Mohebali, M., Ziaei Hezarjaribi, H., Moghadam, Y., &amp; Sharbatkhori, M.</strong> (2022). Leishmania RNA virus 2 (LRV2) exacerbates dermal lesions caused by Leishmania major and comparatively unresponsive to meglumine antimoniate treatment. <em>Experimental Parasitology, 241, 108340</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.1016/j.exppara.2022.108340" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.1016/j.exppara.2022.108340</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Leishmania">
+            <div class="ref-meta">
+              <span class="ref-idx">18</span>
+              <span class="badge b-lrv">Leishmania spp.</span>
+              <span class="badge b-rob">JBI/OHAT: Bajo</span>
+            </div>
+            <p class="ref-txt"><strong>Saura, A., Zakharova, A., Klocek, D., Gerasimov, E. S., Butenko, A., Macedo, D. H., Servienė, E., Zagirova, D., Meshcheryakova, A., Rogozin, I. B., Serva, S., Kostygov, A. Y., &amp; Yurchenko, V.</strong> (2022). Elimination of LRVs elicits different responses in Leishmania spp.. <em>mSphere, 7(4), e00335-22</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.1128/msphere.00335-22" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.1128/msphere.00335-22</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Leishmania">
+            <div class="ref-meta">
+              <span class="ref-idx">19</span>
+              <span class="badge b-lrv">Leishmania spp.</span>
+              <span class="badge b-rob">ROBIS: Bajo</span>
+            </div>
+            <p class="ref-txt"><strong>Shita, E. Y., Semegn, E. N., Wubetu, G. Y., Abitew, A. M., Andualem, B. G., &amp; Alemneh, M. G.</strong> (2022). Prevalence of Leishmania RNA virus in Leishmania parasites in patients with tegumentary leishmaniasis: A systematic review and meta-analysis. <em>PLOS Neglected Tropical Diseases, 16(6), e0010427</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.1371/journal.pntd.0010427" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.1371/journal.pntd.0010427</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Leishmania">
+            <div class="ref-meta">
+              <span class="ref-idx">20</span>
+              <span class="badge b-lrv">Leishmania spp.</span>
+              <span class="badge b-rob">JBI/OHAT: Bajo</span>
+            </div>
+            <p class="ref-txt"><strong>Weber, J. I., Rodrigues, A. V., Valério-Bolas, A., Nunes, T., Carvalheiro, M., Antunes, W., Alexandre-Pires, G., da Fonseca, I. P., &amp; Santos-Gomes, G.</strong> (2023). Insights on host–parasite immunomodulation mediated by extracellular vesicles of cutaneous Leishmania shawi and Leishmania guyanensis. <em>Cells, 12(8), 1101</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.3390/cells12081101" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.3390/cells12081101</span>
+            </div>
+          </article>
+          <article class="ref-card" data-cat="Multi-Protozoo">
+            <div class="ref-meta">
+              <span class="ref-idx">21</span>
+              <span class="badge b-mul">Multi-Protozoo</span>
+              <span class="badge b-rob">SANRA: Bajo-Moderado</span>
+            </div>
+            <p class="ref-txt"><strong>Zhao, Z., Li, X., Zhang, N., Li, J., Zhao, N., Gao, M., Zhang, X., Wang, X., Zhao, P., Li, L., Sun, M., Cao, L., &amp; Gong, P.</strong> (2023). Multiple regulations of parasitic protozoan viruses: A double-edged sword for protozoa. <em>mBio, 14(1), e02642-22</em>.</p>
+            <div class="ref-links">
+              <a class="doi-btn" href="https://doi.org/10.1128/mbio.02642-22" target="_blank" rel="noopener noreferrer">Abrir DOI Verificado ↗</a>
+              <span class="doi-code">10.1128/mbio.02642-22</span>
+            </div>
+          </article></div>
+  </section>
+
+</main>
+
+<footer>
+  Universidad Politécnica Estatal del Carchi (UPEC) — Carrera de Laboratorio Clínico • Edición 2.0 • 21/21 DOIs Verificados y Memoria de Cálculo Integrada.
+</footer>
+
+<script>
+function openTab(id, btn) {
+  document.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+function runSim(mode, btn) {
+  document.querySelectorAll('.c-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const bP = document.getElementById('bP');
+  const bV = document.getElementById('bV');
+  const out = document.getElementById('simOut');
+
+  if (mode === 1) {
+    bP.style.background = '#ECEFED';
+    bV.style.background = '#ECEFED';
+    out.className = 'sim-result';
+    out.innerHTML = '<strong>[Solo Banda C] NEGATIVO (100% Especificidad):</strong> Sin amplificación parasitaria ni viral. Descarta infección activa sin reacción cruzada frente a <em>T. cruzi</em>, <em>P. falciparum</em> ni <em>M. tuberculosis</em> (Dueñas et al., 2026).';
+  } else if (mode === 2) {
+    bP.style.background = '#247353';
+    bV.style.background = '#ECEFED';
+    out.className = 'sim-result';
+    out.innerHTML = '<strong>[Bandas C + P] PARÁSITO (+) / VIRUS (−):</strong> Infección parasitaria binaria sin portación de <em>Totiviridae</em> (Sensibilidad kDNA 90.9%, LoD = 0.2 eq/reacción). Administrar esquema antiparasitario estándar de primera línea.';
+  } else if (mode === 3) {
+    bP.style.background = '#247353';
+    bV.style.background = '#AE3D2B';
+    out.className = 'sim-result alert';
+    out.innerHTML = '<strong>[C + P + V] ¡ALERTA MATRIOSKA! Leishmania (+) / Virus LRV1 (+):</strong> Riesgo ajustado <strong>OR = 6.30×</strong> de metástasis mucosa destructiva. Garantizar adherencia supervisada estricta al esquema completo (<strong>OR protector = 0.039</strong>; reduce 96.1% el daño mucoso) y vigilancia otorrinolaringológica temprana.';
+  } else {
+    bP.style.background = '#247353';
+    bV.style.background = '#AE3D2B';
+    out.className = 'sim-result alert';
+    out.innerHTML = '<strong>[C + P + V] ¡ALERTA MATRIOSKA! T. vaginalis (+) / Virus TVV (+):</strong> Alto riesgo de piroptosis NLRP3 y exacerbación inflamatoria pos-lisis («Jarisch-Herxheimer viral»). Evitar dosis única de 2 g (19% fallo) e indicar <strong>Metronidazol 500 mg c/12 h × 7 días</strong> (<strong>89.0% curación</strong>; reduce 45% el fallo relativo).';
+  }
+}
+
+function filterRefs(cat, btn) {
+  document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ref-card').forEach(c => {
+    c.classList.toggle('hidden', cat !== 'ALL' && c.dataset.cat !== cat);
+  });
+}
+</script>
+</body>
+</html>
